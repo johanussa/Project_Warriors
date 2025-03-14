@@ -7,6 +7,7 @@ import org.sena.domain.Warrior;
 import org.sena.repository.WarriorRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 public class WarriorService {
@@ -43,5 +44,40 @@ public class WarriorService {
                 "de guerreros: %s", warriorList.size());
 
         return warriorList;
+    }
+
+    public void createWarriorRegistry(Warrior warrior) {
+
+        LOG.infof("@createWarriorRegistry SERV > Inicia ejecucion del servicio para almacenar el guerrero en " +
+                "base de datos con la informacion: %s", warrior);
+
+        warrior.setIdWarrior(UUID.randomUUID().toString());
+
+        warriorRepository.persist(warrior);
+
+        LOG.infof("@createWarriorRegistry SERV > Finaliza ejecucion del servicio para almacenar el guerrero en " +
+                "base de datos. Se registro el siguiente guerrero: %s", warrior);
+    }
+
+    public void updateWarriorRegistry(Warrior warrior) {
+
+        LOG.infof("@updateWarriorRegistry SERV > Inicia ejecucion del servicio para actualizar registro de " +
+                "un guerrero con la información: %s", warrior);
+
+        warriorRepository.update(warrior);
+
+        LOG.infof("@updateWarriorRegistry SERV > Finaliza ejecucion del servicio para actualizar registro de " +
+                "un guerrero con la información: %s", warrior);
+    }
+
+    public void deleteWarriorRegistry(String idWarrior) {
+
+        LOG.infof("@deleteWarriorRegistry SERV > Inicia ejecucion de servicio para eliminar el guerrero con " +
+                "identificador: %s en base de datos", idWarrior);
+
+        warriorRepository.deleteById(idWarrior);
+
+        LOG.infof("@deleteWarriorRegistry SERV > Finaliza ejecucion del servicio de eliminar guerrero. El " +
+                "guerrero con identificador: %s fue eliminado exitosamente", idWarrior);
     }
 }
