@@ -15,6 +15,7 @@ import org.sena.service.WarriorService;
 
 import java.util.List;
 
+@Tag(name = "Warrior")
 @Path("/internal/warrior")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -26,7 +27,6 @@ public class WarriorApi {
     WarriorService warriorService;
 
     @GET
-    @Tag(name = "Warriors")
     @Operation(
             summary = "Obtener un guerrero por identificador",
             description = "Permite obtener el registro de un guerrero por su identificador"
@@ -54,10 +54,9 @@ public class WarriorApi {
 
     @GET
     @Path("/all")
-    @Tag(name = "Warriors")
     @Operation(
-        summary = "Obtener todos los usuarios",
-        description = "Permite obtener el listado de todos los guerreros registrados"
+            summary = "Obtener todos los usuarios",
+            description = "Permite obtener el listado de todos los guerreros registrados"
     )
     public Response getAllWarriors() {
 
@@ -75,7 +74,6 @@ public class WarriorApi {
 
     @POST
     @Path("/create")
-    @Tag(name = "Warriors")
     @Operation(
             summary = "Crear un guerrero",
             description = "Permite crear el registro de un nuevo guerrero con los datos proporcionados"
@@ -100,7 +98,6 @@ public class WarriorApi {
 
     @PUT
     @Path("/update")
-    @Tag(name = "Warriors")
     @Operation(
             summary = "Actualizar un guerrero",
             description = "Permite actualizar un guerrero con la información proporcionada"
@@ -119,7 +116,6 @@ public class WarriorApi {
     }
 
     @DELETE
-    @Tag(name = "Warriors")
     @Path("/delete/{idWarrior}")
     @Operation(
             summary = "Eliminar un guerrero",

@@ -19,6 +19,7 @@ import org.sena.service.BreedService;
 
 import java.util.List;
 
+@Tag(name = "Breed")
 @Path("/internal/breed")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,7 +32,6 @@ public class BreedApi {
 
     @GET
     @Path("/{idBreed}")
-    @Tag(name = "Breed")
     @Operation(
             summary = "Consultar una raza",
             description = "Permite consultar una raza por su identificador"
@@ -60,7 +60,6 @@ public class BreedApi {
 
     @GET
     @Path("/all")
-    @Tag(name = "Breed")
     @Operation(
             summary = "Obtener listado de razas",
             description = "Permite obtener el listado de las razas registradas en base de datos"
@@ -79,7 +78,6 @@ public class BreedApi {
 
     @POST
     @Path("/create")
-    @Tag(name = "Breed")
     @Operation(
             summary = "Crear una raza",
             description = "Permite realizar el registro de una nueva raza"
@@ -105,7 +103,6 @@ public class BreedApi {
 
     @PUT
     @Path("/update")
-    @Tag(name = "Breed")
     @Operation(
             summary = "Actualizar una raza",
             description = "Permite actualizar una raza por su identificador con la información proporcionada"
@@ -131,7 +128,6 @@ public class BreedApi {
     }
 
     @DELETE
-    @Tag(name = "Breed")
     @Path("/delete/{idBreed}")
     @Operation(
             summary = "Eliminar una raza",

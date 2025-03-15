@@ -19,11 +19,11 @@ public class WarriorTypeService {
     @Inject
     WarriorTypeRepository warriorTypeRepository;
 
-    public WarriorType getWarriorTypeById(String idWarriorType) {
+    public WarriorType getWarriorTypeById(String warriorTypeId) {
 
-        LOG.infof("@getWarriorTypeById SERV > Inicia consulta del tipo de guerrero con ID: %s", idWarriorType);
+        LOG.infof("@getWarriorTypeById SERV > Inicia consulta del tipo de guerrero con ID: %s", warriorTypeId);
 
-        WarriorType warriorType = getWarriorTypeOptional(idWarriorType);
+        WarriorType warriorType = getWarriorTypeOptional(warriorTypeId);
 
         LOG.infof("@getWarriorTypeById SERV > Finaliza consulta. Tipo de guerrero obtenido: %s", warriorType);
 
@@ -76,31 +76,31 @@ public class WarriorTypeService {
                 "informacion: %s", warriorTypeMongo);
     }
 
-    public void deleteWarriorType(String idWarriorType) {
+    public void deleteWarriorType(String warriorTypeId) {
 
-        LOG.infof("@deleteWarriorType SERV > Inicia eliminacion del tipo de guerrero con ID: %s", idWarriorType);
+        LOG.infof("@deleteWarriorType SERV > Inicia eliminacion del tipo de guerrero con ID: %s", warriorTypeId);
 
-        if (!warriorTypeRepository.deleteById(idWarriorType)) {
+        if (!warriorTypeRepository.deleteById(warriorTypeId)) {
 
             LOG.errorf("@deleteWarriorType SERV > No se encontro el tipo de guerrero con el ID: %s. No se " +
-                    "elimino el registro de la base de datos.", idWarriorType);
+                    "elimino el registro de la base de datos.", warriorTypeId);
 
             throw new WarriorException(Response.Status.NOT_FOUND, "El tipo de guerrero con identificador: " +
-                    idWarriorType + ", No esta registrado en base de datos. No se realizó la eliminación");
+                    warriorTypeId + ", No esta registrado en base de datos. No se realizó la eliminación");
         }
 
-        LOG.infof("@deleteWarriorType SERV > Tipo de guerrero con ID: %s eliminado correctamente.", idWarriorType);
+        LOG.infof("@deleteWarriorType SERV > Tipo de guerrero con ID: %s eliminado correctamente.", warriorTypeId);
     }
 
-    private WarriorType getWarriorTypeOptional(String idWarriorType) {
+    private WarriorType getWarriorTypeOptional(String warriorTypeId) {
 
-        return warriorTypeRepository.findByIdOptional(idWarriorType).orElseThrow(() -> {
+        return warriorTypeRepository.findByIdOptional(warriorTypeId).orElseThrow(() -> {
 
             LOG.errorf("@getWarriorTpeOptional SERV > El tipo de guerrero con identificador: %s No se " +
-                    "encuentra registrado en base de datos", idWarriorType);
+                    "encuentra registrado en base de datos", warriorTypeId);
 
             return new WarriorException(Response.Status.NOT_FOUND, "El tipo de guerrero con el identificador: " +
-                    idWarriorType + ", No se encuentra registrado. No se permite continuar");
+                    warriorTypeId + ", No se encuentra registrado. No se permite continuar");
         });
     }
 

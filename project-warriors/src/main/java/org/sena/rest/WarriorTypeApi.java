@@ -31,16 +31,24 @@ public class WarriorTypeApi {
     WarriorTypeService warriorTypeService;
 
     @GET
-    @Path("/{idWarriorType}")
+    @Path("/{warriorTypeId}")
     @Operation(
             summary = "Consultar un tipo de guerrero",
             description = "Permite consultar un tipo de guerrero por su identificador"
     )
-    public Response getWarriorTypeById(@PathParam("idWarriorType") String idWarriorType) {
+    public Response getWarriorTypeById(
+            @Parameter(
+                    name = "warriorTypeId",
+                    description = "Identificador del tipo de guerrero a consultar",
+                    required = true,
+                    example = "0e1bd9ed-25b0-43e2-b55a-1013c98e63e5"
+            )
+            @PathParam("warriorTypeId") String warriorTypeId
+    ) {
 
-        LOG.infof("@getWarriorTypeById API > Inicia consulta del tipo de guerrero con id: %s", idWarriorType);
+        LOG.infof("@getWarriorTypeById API > Inicia consulta del tipo de guerrero con ID: %s", warriorTypeId);
 
-        WarriorType warriorType = warriorTypeService.getWarriorTypeById(idWarriorType);
+        WarriorType warriorType = warriorTypeService.getWarriorTypeById(warriorTypeId);
 
         LOG.infof("getWarriorTypeById API > Finaliza consulta. Se obtuvo el siguiente tipo: %s", warriorType);
 
@@ -109,35 +117,35 @@ public class WarriorTypeApi {
 
         warriorTypeService.updateWarriorType(warriorType);
 
-        LOG.infof("@updateWarriorTpe API > Finaliza ejecucion de API para actualizar la raza con identificador" +
-                ": %s. La raza fue actualizada correctamente", warriorType.getIdWarriorType());
+        LOG.infof("@updateWarriorTpe API > Finaliza API para actualizar el tipo de guerrero con ID: %s. El " +
+                "tipo de guerrero fue actualizado correctamente", warriorType.getIdWarriorType());
 
         return Response.ok().status(Response.Status.NO_CONTENT).build();
     }
 
     @DELETE
-    @Path("/delete/{idWarriorType}")
+    @Path("/delete/{warriorTypeId}")
     @Operation(
             summary = "Eliminar un tipo de guerrero",
             description = "Permite eliminar el registro de un tipo de guerrero por el identificador proporcionado"
     )
     public Response deleteWarriorType(
             @Parameter(
-                    name = "idWarriorType",
+                    name = "warriorTypeId",
                     description = "Identificador del tipo de guerrero a eliminar",
                     required = true,
                     example = "0e1bd9ed-25b0-43e2-b55a-1013c98e63e5"
             )
             @NotBlank(message = "Debe ingresar el valor del identificador del tipo de guerrero a eliminar")
-            @PathParam("idWarriorType") String idWarriorType
+            @PathParam("warriorTypeId") String warriorTypeId
     ) {
 
-        LOG.infof("@deleteWarriorType API > Inicia API para eliminar tipo guerrero con ID: %s", idWarriorType);
+        LOG.infof("@deleteWarriorType API > Inicia API para eliminar tipo guerrero con ID: %s", warriorTypeId);
 
-        warriorTypeService.deleteWarriorType(idWarriorType);
+        warriorTypeService.deleteWarriorType(warriorTypeId);
 
         LOG.infof("@deleteWarriorType API > Finaliza API para eliminar el registro del tipo de guerrero con el " +
-                "identificador: %s. El registro fue eliminado correctamente", idWarriorType);
+                "identificador: %s. El registro fue eliminado correctamente", warriorTypeId);
 
         return Response.ok().status(Response.Status.NO_CONTENT).build();
     }
