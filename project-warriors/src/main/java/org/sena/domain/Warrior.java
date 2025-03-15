@@ -44,7 +44,5 @@ public class Warrior implements Serializable {
     private List<String> idPowers;
 
     @Override
-    public String toString() {
-        return ConvertToJson.toJson(this);
-    }
+    public String toString() { return ConvertToJson.toJson(this); }
 }
