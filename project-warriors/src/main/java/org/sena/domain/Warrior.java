@@ -27,13 +27,13 @@ public class Warrior implements Serializable {
 
     @Schema(examples = "100.0")
     @NotNull(message = "El campo health no puede ser nulo o vacío")
-    private double health;
+    private Double health;
 
     @Schema(examples = "100.0")
     @NotNull(message = "El campo energy no puede ser nulo o vacío")
-    private double energy;
+    private Double energy;
 
-    @NotNull(message = "El campo breed no puede ser nulo o vacío")
+    @NotNull(message = "El campo breedId (id raza) no puede ser nulo o vacío")
     private String breedId;
 
     @NotNull(message = "El campo warriorType no puede ser nulo o vacío")

@@ -157,5 +157,4 @@ public class BreedApi {
 
         return Response.ok().status(Response.Status.NO_CONTENT).build();
     }
-
 }

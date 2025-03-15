@@ -23,7 +23,7 @@ public class BreedService {
 
         LOG.infof("@getBreedById SERV > Inicia consulta de la raza con el identificador: %s", idBreed);
 
-        Breed breed = breedRepository.findById(idBreed);
+        Breed breed = getBreedByIdOptional(idBreed);
 
         LOG.infof("@getBreedById SERV > Finaliza consultar de raza con id: %s. Raza obtenida: %s", idBreed, breed);
 
@@ -47,7 +47,7 @@ public class BreedService {
 
         validateBreedRegistry(breed.getName());
 
-        LOG.infof("@createBreed SERV > Se agrega identificador al registro", breed.getName());
+        LOG.infof("@createBreed SERV > Se agrega el identificador a la raza: %s", breed.getName());
 
         breed.setIdBreed(UUID.randomUUID().toString());
         breedRepository.persist(breed);
@@ -60,7 +60,7 @@ public class BreedService {
         LOG.infof("@updateBreed SERV > Inicia servicio para actualizar la raza con la data: %s. Inicia " +
                 "consulta de la raza con el identificador: %s", breed, breed.getIdBreed());
 
-        Breed breedMongo = getByIdOptional(breed.getIdBreed());
+        Breed breedMongo = getBreedByIdOptional(breed.getIdBreed());
 
         LOG.infof("@updateBreed SERV > Raza encontrada: %s. Inicia actualizacion de la informacion", breedMongo);
 
@@ -70,16 +70,16 @@ public class BreedService {
 
         breedRepository.update(breedMongo);
 
-        LOG.infof("@updateBreed SERV > La raza con id: %s se actualizo correctamente", breed.getIdBreed());
+        LOG.infof("@updateBreed SERV > La raza se actualizo correctamente con la informacion: %s", breedMongo);
     }
 
     public void deleteBreed(String idBreed) {
 
-        LOG.infof("@deleteBreed SERV > Inicia eliminación de raza con identificador: %s", idBreed);
+        LOG.infof("@deleteBreed SERV > Inicia eliminacion de raza con identificador: %s", idBreed);
 
         if (!breedRepository.deleteById(idBreed)) {
 
-            LOG.errorf("@deleteBreed SERV > No se encontró la raza con identificador: %s. No se eliminó el " +
+            LOG.errorf("@deleteBreed SERV > No se encontro la raza con identificador: %s. No se elimino el " +
                     "registro de la base de datos.", idBreed);
 
             throw new WarriorException(Response.Status.NOT_FOUND, "La raza con identificador: " + idBreed + ", No " +
@@ -91,7 +91,7 @@ public class BreedService {
 
     private void validateBreedRegistry(String breedName) {
 
-        LOG.infof("@validateBreedRegistry SERV > Inicia verificacion de existencia de raza con id: %s", breedName);
+        LOG.infof("@validateBreedRegistry SERV > Inicia verificacion de existencia raza con nombre: %s", breedName);
 
         breedRepository.getBreedByName(breedName).ifPresent(breed -> {
 
@@ -105,14 +105,14 @@ public class BreedService {
                 "continua proceso de almacenamiento", breedName);
     }
 
-    private Breed getByIdOptional(String idBreed) {
+    private Breed getBreedByIdOptional(String idBreed) {
 
         return breedRepository.findByIdOptional(idBreed).orElseThrow(() -> {
 
             LOG.errorf("@getByIdOptional SERV > La raza con identificador: %s No se encuentra registrada", idBreed);
 
             return new WarriorException(Response.Status.NOT_FOUND, "La raza con el identificador: " + idBreed +
-                    ", No se encuentra registrada. No se puede actualizar");
+                    ", No se encuentra registrada. No se permite continuar");
         });
     }
 }
