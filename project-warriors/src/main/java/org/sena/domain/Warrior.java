@@ -1,5 +1,6 @@
 package org.sena.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Warrior implements Serializable {
 
     @BsonId
@@ -51,6 +53,10 @@ public class Warrior implements Serializable {
     @Schema(examples = "[\"2d4f1313-4c22-4576-8c97-a9b3416fe416\", \"e37b7e13-9843-4747-9ef0-ad9ef99ac4a2\"]")
     @Size(min = 1, message = "El guerrero debe tener al menos una referencia a un poder")
     private List<String> powersId;
+
+    private Breed breed;
+    private WarriorType warriorType;
+    private List<Power> powers;
 
     @Override
     public String toString() { return ConvertToJson.toJson(this); }

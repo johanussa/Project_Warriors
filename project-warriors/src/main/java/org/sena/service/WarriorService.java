@@ -23,7 +23,7 @@ public class WarriorService {
 
         LOG.infof("@getWarriorById SERV > Inicia servicio para obtener registro de guerrero con ID: %s", warriorId);
 
-        Warrior warrior = getWarriorOptional(warriorId);
+        Warrior warrior = getWarriorAggregation(warriorId);
 
         LOG.infof("@getWarriorById SERV > El guerrero se obtuvo correctamente. Guerrero: %s", warrior);
 
@@ -95,6 +95,17 @@ public class WarriorService {
         return warriorRepository.findByIdOptional(warriorId).orElseThrow(() -> {
 
             LOG.errorf("@getWarriorOptional SERV > El guerrero con ID: %s No se encuentra registrado", warriorId);
+
+            return new WarriorException(Response.Status.NOT_FOUND, "El guerrero con el identificador: " + warriorId +
+                    ", No se encuentra registrado. No se permite continuar");
+        });
+    }
+
+    private Warrior getWarriorAggregation(String warriorId) {
+
+        return warriorRepository.getWarriorById(warriorId).orElseThrow(() -> {
+
+            LOG.errorf("@getWarriorAggregation SERV > El guerrero con ID: %s No se encuentra registrado", warriorId);
 
             return new WarriorException(Response.Status.NOT_FOUND, "El guerrero con el identificador: " + warriorId +
                     ", No se encuentra registrado. No se permite continuar");
