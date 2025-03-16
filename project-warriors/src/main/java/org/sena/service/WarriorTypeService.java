@@ -1,5 +1,7 @@
 package org.sena.service;
 
+import io.quarkus.cache.CacheInvalidate;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
@@ -19,6 +21,7 @@ public class WarriorTypeService {
     @Inject
     WarriorTypeRepository warriorTypeRepository;
 
+    @CacheResult(cacheName = "warrior-type-cache")
     public WarriorType getWarriorTypeById(String warriorTypeId) {
 
         LOG.infof("@getWarriorTypeById SERV > Inicia consulta del tipo de guerrero con ID: %s", warriorTypeId);
@@ -30,6 +33,7 @@ public class WarriorTypeService {
         return warriorType;
     }
 
+    @CacheResult(cacheName = "warrior-type-cache")
     public List<WarriorType> getListTypesWarrior() {
 
         LOG.info("@getListTypesWarrior SERV > Inicia consulta para obtener listado de tipos de guerrero en DB");
@@ -42,6 +46,7 @@ public class WarriorTypeService {
         return warriorTypes;
     }
 
+    @CacheInvalidate(cacheName = "warrior-type-cache")
     public void createWarriorType(WarriorType warriorType) {
 
         LOG.infof("@createWarriorType SERV > Inicia servicio almacenamiento del tipo guerrero: %s.", warriorType);
@@ -57,6 +62,7 @@ public class WarriorTypeService {
                 "identificador: %s", warriorType.getIdWarriorType());
     }
 
+    @CacheInvalidate(cacheName = "warrior-type-cache")
     public void updateWarriorType(WarriorType warriorType) {
 
         LOG.infof("@updateWarriorType SERV > Inicia actualizacion del tipo de guerrero con la data: %s. " +
@@ -76,6 +82,7 @@ public class WarriorTypeService {
                 "informacion: %s", warriorTypeMongo);
     }
 
+    @CacheInvalidate(cacheName = "warrior-type-cache")
     public void deleteWarriorType(String warriorTypeId) {
 
         LOG.infof("@deleteWarriorType SERV > Inicia eliminacion del tipo de guerrero con ID: %s", warriorTypeId);

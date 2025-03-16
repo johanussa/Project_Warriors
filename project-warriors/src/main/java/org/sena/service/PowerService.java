@@ -1,5 +1,7 @@
 package org.sena.service;
 
+import io.quarkus.cache.CacheInvalidate;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
@@ -19,6 +21,7 @@ public class PowerService {
     @Inject
     PowerRepository powerRepository;
 
+    @CacheResult(cacheName = "power-cache")
     public List<Power> getPowersList() {
 
         LOG.info("@getPowersList SERV > Inicia consulta para obtener listado de poderes en base de datos");
@@ -31,6 +34,7 @@ public class PowerService {
         return powerList;
     }
 
+    @CacheResult(cacheName = "power-cache")
     public Power getPowerById(String powerId) {
 
         LOG.infof("@getPowerById SERV > Inicia consulta del poder con identificador: %s", powerId);
@@ -42,6 +46,7 @@ public class PowerService {
         return power;
     }
 
+    @CacheInvalidate(cacheName = "power-cache")
     public void createPower(Power power) {
 
         LOG.infof("@createPower SERV > Inicia servicio de almacenamiento del poder: %s.", power);
@@ -56,6 +61,7 @@ public class PowerService {
         LOG.infof("@createPower SERV > El poder fue almacenado correctamente con el ID: %s", power.getIdPower());
     }
 
+    @CacheInvalidate(cacheName = "power-cache")
     public void updatePower(Power power) {
 
         LOG.infof("@updatePower SERV > Inicia actualizacion del poder con la data: %s. Inicia consulta por " +
@@ -73,9 +79,10 @@ public class PowerService {
 
         powerRepository.update(powerMongo);
 
-        LOG.infof("@updatePower SERV > EL poder se actualizo correctamente con la informacion: %s", powerMongo);
+        LOG.infof("@updatePower SERV > El poder se actualizo correctamente con la informacion: %s", powerMongo);
     }
 
+    @CacheInvalidate(cacheName = "power-cache")
     public void deletePowerById(String powerId) {
 
         LOG.infof("@deletePowerById SERV > Inicia eliminacion del poder con identificador: %s", powerId);

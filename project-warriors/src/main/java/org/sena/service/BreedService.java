@@ -1,5 +1,7 @@
 package org.sena.service;
 
+import io.quarkus.cache.CacheInvalidate;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
@@ -19,6 +21,7 @@ public class BreedService {
     @Inject
     BreedRepository breedRepository;
 
+    @CacheResult(cacheName = "breed-cache")
     public Breed getBreedById(String idBreed) {
 
         LOG.infof("@getBreedById SERV > Inicia consulta de la raza con el identificador: %s", idBreed);
@@ -30,6 +33,7 @@ public class BreedService {
         return breed;
     }
 
+    @CacheResult(cacheName = "breed-cache")
     public List<Breed> getBreedList() {
 
         LOG.info("@getBreedList SERV > Inicia ejecucion de consulta para obtener el listado de razas en base de datos");
@@ -41,6 +45,7 @@ public class BreedService {
         return breeds;
     }
 
+    @CacheInvalidate(cacheName = "breed-cache")
     public void createBreed(Breed breed) {
 
         LOG.infof("@createBreed SERV > Inicia servicio de almacenamiento de raza: %s en base de datos.", breed);
@@ -55,6 +60,7 @@ public class BreedService {
         LOG.infof("@createBreed SERV > Raza almacenada correctamente con ID: %s", breed.getIdBreed());
     }
 
+    @CacheInvalidate(cacheName = "breed-cache")
     public void updateBreed(Breed breed) {
 
         LOG.infof("@updateBreed SERV > Inicia servicio para actualizar la raza con la data: %s. Inicia " +
@@ -73,6 +79,7 @@ public class BreedService {
         LOG.infof("@updateBreed SERV > La raza se actualizo correctamente con la informacion: %s", breedMongo);
     }
 
+    @CacheInvalidate(cacheName = "breed-cache")
     public void deleteBreed(String idBreed) {
 
         LOG.infof("@deleteBreed SERV > Inicia eliminacion de raza con identificador: %s", idBreed);

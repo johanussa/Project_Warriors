@@ -13,11 +13,11 @@ public class WarriorRepository implements PanacheMongoRepositoryBase<Warrior, St
 
     private static final Logger LOG = Logger.getLogger(WarriorRepository.class);
 
-    public Optional<Warrior> getWarriorById(String idWarrior) {
+    public Optional<Warrior> getWarriorByName(String warriorName) {
 
-        LOG.infof("@getWarriorById REPO > Inicia consulta del guerrero con identificador: %s", idWarrior);
+        LOG.infof("@getWarriorByName REPO > Inicia consulta del guerrero con el nombre: %s", warriorName);
 
-        return findByIdOptional(idWarrior);
+        return find("name = ?1", warriorName).firstResultOptional();
     }
 
     public List<Warrior> getWarriorList() {

@@ -48,9 +48,15 @@
             <version>1.18.36</version>
             <scope>provided</scope>
         </dependency>
+        <!-- OpenAPI - Swagger -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
+        </dependency>
+        <!-- Cache -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
