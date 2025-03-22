@@ -1,5 +1,7 @@
 package org.sena.service;
 
+import io.quarkus.cache.CacheInvalidateAll;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
@@ -19,6 +21,7 @@ public class WarriorService {
     @Inject
     WarriorRepository warriorRepository;
 
+    @CacheResult(cacheName = "warrior-cache")
     public Warrior getWarriorById(String warriorId) {
 
         LOG.infof("@getWarriorById SERV > Inicia servicio para obtener registro de guerrero con ID: %s", warriorId);
@@ -30,6 +33,7 @@ public class WarriorService {
         return warrior;
     }
 
+    @CacheResult(cacheName = "warrior-cache")
     public List<Warrior> getAllWarriors() {
 
         LOG.info("@getAllWarriors SERV > Inicia ejecucion del servicio para obtener el listado de guerreros");
@@ -42,6 +46,7 @@ public class WarriorService {
         return warriorList;
     }
 
+    @CacheInvalidateAll(cacheName = "warrior-cache")
     public void createWarriorRegistry(Warrior warrior) {
 
         LOG.infof("@createWarriorRegistry SERV > Inicia servicio de almacenamiento del guerrero: %s.", warrior);
@@ -57,6 +62,7 @@ public class WarriorService {
                 "base de datos. Se registro el siguiente guerrero: %s", warrior);
     }
 
+    @CacheInvalidateAll(cacheName = "warrior-cache")
     public void updateWarriorRegistry(Warrior warrior) {
 
         LOG.infof("@updateWarriorRegistry SERV > Inicia ejecucion del servicio para actualizar registro de " +
@@ -72,6 +78,7 @@ public class WarriorService {
         LOG.infof("@updateWarriorRegistry SERV > El guerrero se actualizo correctamente con la data: %s", warriorMongo);
     }
 
+    @CacheInvalidateAll(cacheName = "warrior-cache")
     public void deleteWarriorRegistry(String warriorId) {
 
         LOG.infof("@deleteWarriorRegistry SERV > Inicia ejecucion de servicio para eliminar el guerrero con " +

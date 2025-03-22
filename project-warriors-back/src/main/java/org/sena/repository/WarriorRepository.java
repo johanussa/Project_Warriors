@@ -29,8 +29,7 @@ public class WarriorRepository implements PanacheMongoRepositoryBase<Warrior, St
 
     public List<Warrior> getWarriorList() {
 
-        LOG.info("@getWarriorList REPO > Inicia obtencion dcls" +
-                "mvn qel listado de guerreros registrados en base de datos");
+        LOG.info("@getWarriorList REPO > Inicia obtencion del listado de guerreros registrados en base de datos");
 
         return findAll().list();
     }
