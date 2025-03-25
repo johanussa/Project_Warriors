@@ -1,13 +1,35 @@
+import { useEffect, useState } from "react";
 import { Button, CloseButton, Drawer, Portal, Image } from "@chakra-ui/react";
+import { toast } from "react-toastify";
 import { Warrior } from "../services/types";
+import { getWarriorById } from "../services/warriorService";
+import { LoadingScreen, WarriorBreed, WarriorPowers, WarriorStatus, WarriorTypeComp } from "./WarriorDataComponents";
 
 interface WarriorDataProps {
   open: boolean;
-  setOpen: (e: boolean) => void;
-  warrior: Warrior | null;
+  setOpen: (event: boolean) => void;
+  idWarrior: string;
 }
 
-const WarriorData = ({ open, setOpen, warrior }: WarriorDataProps) => {
+const WarriorData = ({ open, setOpen, idWarrior }: WarriorDataProps) => {
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [warrior, setWarrior] = useState<Warrior | null>(null);
+
+  useEffect(() => {
+    if (!idWarrior || idWarrior === warrior?.idWarrior) return;
+
+    const getWarrior = async () => {
+      try {
+        const response = await getWarriorById(idWarrior);
+        setWarrior(response);
+      } catch (error) {
+        toast.error(`Se presento un error: ${error}`);
+      } finally { setLoading(false); }
+    }
+
+    getWarrior();
+  }, [idWarrior]);
 
   return (
     <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)} size="md">
@@ -15,26 +37,30 @@ const WarriorData = ({ open, setOpen, warrior }: WarriorDataProps) => {
         <Drawer.Backdrop />
         <Drawer.Positioner>
           <Drawer.Content>
-            <Drawer.Header>
-              <Drawer.Title>{warrior?.name}</Drawer.Title>
-            </Drawer.Header>
-            <Image
-              width="200px" height="450px" margin="0 auto"
-              src={warrior?.image} alt={warrior?.name}
-            />
-            <Drawer.Body>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </Drawer.Body>
-            <Drawer.Footer>
-              <Button variant="outline">Cancel</Button>
-              <Button>Save</Button>
-            </Drawer.Footer>
-            <Drawer.CloseTrigger asChild>
-              <CloseButton size="sm" />
-            </Drawer.CloseTrigger>
+            {loading ? (<LoadingScreen />) : (
+              <>
+                <Drawer.Header>
+                  <Drawer.Title textStyle="2xl">{warrior?.name}</Drawer.Title>
+                </Drawer.Header>
+                <Image
+                  width="200px" height="450px" margin="0 auto"
+                  src={warrior?.image} alt={warrior?.name}
+                />
+                <Drawer.Body>
+                  <WarriorStatus warrior={warrior}/>
+                  <WarriorBreed breed={warrior?.breed}/>
+                  <WarriorTypeComp warriorType={warrior?.warriorType}/>
+                  <WarriorPowers powers={warrior?.powers}/>
+                </Drawer.Body>
+                <Drawer.Footer>
+                  <Button variant="outline" onClick={() => setOpen(false)}>Cerrar</Button>
+                  <Button>Actualizar</Button>
+                </Drawer.Footer>
+                <Drawer.CloseTrigger asChild>
+                  <CloseButton size="sm" />
+                </Drawer.CloseTrigger>
+              </>
+            )}
           </Drawer.Content>
         </Drawer.Positioner>
       </Portal>
