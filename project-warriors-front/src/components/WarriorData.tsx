@@ -39,11 +39,11 @@ const WarriorData = ({ open, setOpen, idWarrior }: WarriorDataProps) => {
           <Drawer.Content>
             {loading ? (<LoadingScreen />) : (
               <>
-                <Drawer.Header>
+                <Drawer.Header pb="0">
                   <Drawer.Title textStyle="2xl">{warrior?.name}</Drawer.Title>
                 </Drawer.Header>
                 <Image
-                  width="200px" height="450px" margin="0 auto"
+                  width="200px" height="450px" margin="0 auto 6px"
                   src={warrior?.image} alt={warrior?.name}
                 />
                 <Drawer.Body>

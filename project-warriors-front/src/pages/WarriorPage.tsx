@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Text, Spinner } from "@chakra-ui/react";
 import { toast } from "react-toastify";
 import { Breed, Power, Warrior, WarriorType } from "../services/types";
-import { getAllWarriors, getWarriorTypes, getBreeds, getPowers } from "../services/warriorService";
+import { getAllWarriors, getWarriorTypes, getBreeds, getPowers, getImages } from "../services/warriorService";
 import WarriorList from "../components/WarriorsList";
 import WarriorData from "../components/WarriorData";
 import WarriorCreate from "../components/WarriorCreate";
@@ -13,6 +13,7 @@ const WarriorPage = () => {
   const [warriorTypes, setWarriorTypes] = useState<WarriorType[]>([]);
   const [warriorBreeds, setWarriorBreeds] = useState<Breed[]>([]);
   const [warriorPowers, setWarriorPowers] = useState<Power[]>([]);
+  const [warriorImages, setWarriorImages] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [openInfo, setOpenInfo] = useState<boolean>(false);
   const [idWarrior, setIdWarrior] = useState<string>("");
@@ -20,16 +21,18 @@ const WarriorPage = () => {
   useEffect(() => {
     const warriorsData = async () => {
       try {
-        const [warriorsResponse, typesResponse, breedsResponse, powersResponse] = await Promise.all([
+        const [warriorsResponse, typesResponse, breedsResponse, powersResponse, imagesResponse] = await Promise.all([
           getAllWarriors(),
           getWarriorTypes(),
           getBreeds(),
-          getPowers()
+          getPowers(),
+          getImages()
         ]);
         setWarriors(warriorsResponse);
         setWarriorTypes(typesResponse);
         setWarriorBreeds(breedsResponse);
         setWarriorPowers(powersResponse);
+        setWarriorImages(imagesResponse);
       } catch (error) {
         toast.error(`Se presento un error: ${error}`);
       } finally { setLoading(false); }
@@ -47,7 +50,7 @@ const WarriorPage = () => {
 
   return (
     <>
-      <WarriorCreate warriorTypes={warriorTypes} warriorBreeds={warriorBreeds} warriorPowers={warriorPowers} />
+      <WarriorCreate warriorTypes={warriorTypes} warriorBreeds={warriorBreeds} warriorPowers={warriorPowers} warriorImages={warriorImages}/>
       <WarriorList warriors={warriors} handlerShowWarrior={handlerShowWarrior} />
       {openInfo && <WarriorData open={openInfo} setOpen={setOpenInfo} idWarrior={idWarrior} />}
     </>
