@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, CloseButton, Drawer, Portal, Image } from "@chakra-ui/react";
 import { toast } from "react-toastify";
-import { Warrior } from "../services/types";
-import { getWarriorById } from "../services/warriorService";
+import { Warrior } from "../../services/types";
+import { getWarriorById } from "../../services/warriorService";
 import { LoadingScreen, WarriorBreed, WarriorPowers, WarriorStatus, WarriorTypeComp } from "./WarriorDataComponents";
 
 interface WarriorDataProps {
@@ -47,10 +47,10 @@ const WarriorData = ({ open, setOpen, idWarrior }: WarriorDataProps) => {
                   src={warrior?.image} alt={warrior?.name}
                 />
                 <Drawer.Body>
-                  <WarriorStatus warrior={warrior}/>
-                  <WarriorBreed breed={warrior?.breed}/>
-                  <WarriorTypeComp warriorType={warrior?.warriorType}/>
-                  <WarriorPowers powers={warrior?.powers}/>
+                  <WarriorStatus warrior={warrior} />
+                  <WarriorBreed breed={warrior?.breed} />
+                  <WarriorTypeComp warriorType={warrior?.warriorType} />
+                  <WarriorPowers powers={warrior?.powers} />
                 </Drawer.Body>
                 <Drawer.Footer>
                   <Button variant="outline" onClick={() => setOpen(false)}>Cerrar</Button>

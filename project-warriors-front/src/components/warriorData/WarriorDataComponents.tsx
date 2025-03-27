@@ -1,5 +1,5 @@
 import { Drawer, VStack, Spinner, Text, DataList, Span } from "@chakra-ui/react";
-import { Warrior, Breed, WarriorType, Power } from "../services/types";
+import { Warrior, Breed, WarriorType, Power } from "../../services/types";
 
 export const LoadingScreen = () => (
     <VStack colorPalette="teal" mt="200px">

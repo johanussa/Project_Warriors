@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import { Breed, Power, Warrior, WarriorType } from "../services/types";
 import { getAllWarriors, getWarriorTypes, getBreeds, getPowers, getImages } from "../services/warriorService";
 import WarriorList from "../components/WarriorsList";
-import WarriorData from "../components/WarriorData";
-import WarriorCreate from "../components/WarriorCreate";
+import WarriorData from "../components/warriorData/WarriorData";
+import WarriorCreate from "../components/warriorCreate/WarriorCreate";
 
 const WarriorPage = () => {
 

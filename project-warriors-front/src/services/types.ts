@@ -30,3 +30,13 @@ export interface Power {
     description: string;
     powerEnergyConsumed: number;
 }
+
+export interface WarriorData {
+    name: string;
+    image: string;
+    health: number;
+    energy: number;
+    breedId: string;
+    warriorTypeId: string;
+    powersId: string[];
+}
