@@ -31,7 +31,7 @@ public class PowerApi {
     PowerService powerService;
 
     @GET
-    @Path("/all")
+    @Path("/allPowers")
     @Operation(
             summary = "Obtener listado de poderes",
             description = "Permite obtener el listado de los poderes registrados en base de datos"

@@ -1,7 +1,7 @@
 import { Button, Fieldset, Stack } from "@chakra-ui/react";
 import { Breed, Power, WarriorType, WarriorData } from "../../services/types";
 import { FieldForm, ImageSelector, RadioGroup } from "./WarriorCreateComponents";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface WarriorCreateProps {
   warriorTypes: WarriorType[];
@@ -17,8 +17,22 @@ const WarriorCreate = ({ warriorTypes, warriorBreeds, warriorPowers, warriorImag
     breedId: "", warriorTypeId: "", powersId: []
   });
 
+  const handlerChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+
+    setWarriorData((prevState) => {
+      if (name === "powersId") {
+        const updatedPowers: Set<string> = new Set(prevState.powersId);
+        updatedPowers.add(value);
+
+        return { ...prevState, powersId: Array.from(updatedPowers) };
+      }
+      return { ...prevState, [name]: value };
+    });
+  }
+
   return (
-    <form action="">
+    <form>
       <Fieldset.Root size="lg" maxW="full" p="8">
         <Stack>
           <Fieldset.Legend fontSize="1.2rem" fontWeight="bold">Crear nuevo guerrero</Fieldset.Legend>
@@ -27,21 +41,21 @@ const WarriorCreate = ({ warriorTypes, warriorBreeds, warriorPowers, warriorImag
               Ingresar todos los datos requeridos y recordar que se debe agregar al menos 5 poderes
             </Fieldset.HelperText>
             <Fieldset.Content width="220px" >
-              <ImageSelector warriorImages={warriorImages} />
+              <ImageSelector warriorImages={warriorImages} setWarriorData={setWarriorData} />
             </Fieldset.Content>
           </Fieldset.Content>
         </Stack>
 
         <Fieldset.Content display="grid" gridTemplateColumns="1fr 1fr 1fr">
-          <FieldForm label="Nombre" type="text" id="name" />
-          <FieldForm label="Energia" id="energy" />
-          <FieldForm label="Salud" id="health" />
+          <FieldForm label="Nombre" type="text" name="name" handlerChange={handlerChange} />
+          <FieldForm label="Energia" name="energy" handlerChange={handlerChange} />
+          <FieldForm label="Salud" name="health" handlerChange={handlerChange} />
 
-          <RadioGroup label="Tipo de guerrero"
+          <RadioGroup name="warriorTypeId" label="Tipo de guerrero" handlerChange={handlerChange}
             options={warriorTypes.map(t => ({ id: t.idWarriorType, name: t.name, description: t.description }))} extra={false} />
-          <RadioGroup label="Raza del guerrero"
+          <RadioGroup name="breedId" label="Raza del guerrero" handlerChange={handlerChange}
             options={warriorBreeds.map(b => ({ id: b.idBreed, name: b.name, description: b.description, resistence: b.resistance }))} extra />
-          <RadioGroup label="Elegir poderes"
+          <RadioGroup name="powersId" label="Elegir poderes" handlerChange={handlerChange}
             options={warriorPowers.map(p => ({ id: p.idPower, name: p.name, description: p.description }))} extra={false} />
         </Fieldset.Content>
 

@@ -6,7 +6,7 @@ const PATH_BASE = 'http://localhost:8080/internal';
 
 export const getAllWarriors = async (): Promise<Warrior[]> => {
     try {
-        const response = await axios.get<Warrior[]>(`${PATH_BASE}/warrior/all`);
+        const response = await axios.get<Warrior[]>(`${PATH_BASE}/warrior/allWarriors`);
         toast.success("Consulta lista de guerreros exitosa", { autoClose: 800 });
 
         return response.data;
@@ -31,7 +31,7 @@ export const getWarriorById = async (idWarrior: string | undefined): Promise<War
 
 export const getWarriorTypes = async (): Promise<WarriorType[]> => {
     try {
-        const response = await axios.get<WarriorType[]>(`${PATH_BASE}/warrior-type/all`);
+        const response = await axios.get<WarriorType[]>(`${PATH_BASE}/warrior-type/allWarriorTypes`);
         toast.success("Consulta de tipos de guerreros exitosa", { autoClose: 800 });
 
         return response.data;
@@ -43,7 +43,7 @@ export const getWarriorTypes = async (): Promise<WarriorType[]> => {
 
 export const getBreeds = async (): Promise<Breed[]> => {
     try {
-        const response = await axios.get<Breed[]>(`${PATH_BASE}/breed/all`);
+        const response = await axios.get<Breed[]>(`${PATH_BASE}/breed/allBreeds`);
         toast.success("Consulta de razas exitosa", { autoClose: 800 });
 
         return response.data;
@@ -55,7 +55,7 @@ export const getBreeds = async (): Promise<Breed[]> => {
 
 export const getPowers = async (): Promise<Power[]> => {
     try {
-        const response = await axios.get<Power[]>(`${PATH_BASE}/power/all`);
+        const response = await axios.get<Power[]>(`${PATH_BASE}/power/allPowers`);
         toast.success("Consulta de poderes exitosa", { autoClose: 800 });
 
         return response.data;

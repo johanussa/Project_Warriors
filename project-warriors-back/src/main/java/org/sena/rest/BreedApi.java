@@ -59,7 +59,7 @@ public class BreedApi {
     }
 
     @GET
-    @Path("/all")
+    @Path("/allBreeds")
     @Operation(
             summary = "Obtener listado de razas",
             description = "Permite obtener el listado de las razas registradas en base de datos"

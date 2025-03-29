@@ -56,7 +56,7 @@ public class WarriorApi {
     }
 
     @GET
-    @Path("/all")
+    @Path("/allWarriors")
     @Operation(
             summary = "Obtener todos los guerreros",
             description = "Permite obtener el listado de todos los guerreros registrados"
