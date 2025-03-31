@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Text, Spinner } from "@chakra-ui/react";
 import { toast } from "react-toastify";
 import { Breed, Power, Warrior, WarriorType } from "../services/types";
+import { Skeleton, Container, Flex } from "@chakra-ui/react";
 import { getAllWarriors, getWarriorTypes, getBreeds, getPowers, getImages } from "../services/warriorService";
-import WarriorList from "../components/WarriorsList";
+import { BtnCreateWarrior, WarriorList } from "../components/WarriorsList";
 import WarriorData from "../components/warriorData/WarriorData";
 import WarriorCreate from "../components/warriorCreate/WarriorCreate";
 
@@ -16,6 +16,7 @@ const WarriorPage = () => {
   const [warriorImages, setWarriorImages] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [openInfo, setOpenInfo] = useState<boolean>(false);
+  const [openCreate, setOpenCreate] = useState<boolean>(false);
   const [idWarrior, setIdWarrior] = useState<string>("");
 
   useEffect(() => {
@@ -37,22 +38,59 @@ const WarriorPage = () => {
         toast.error(`Se presento un error: ${error}`);
       } finally { setLoading(false); }
     }
-
     warriorsData();
   }, []);
 
-  const handlerShowWarrior = (warrior: Warrior) => {
-    setIdWarrior(warrior.idWarrior);
-    setOpenInfo(prev => !prev);
+  const handleShowWarrior = (warrior: Warrior) => {
+    if (warrior.idWarrior) {
+      setIdWarrior(warrior.idWarrior);
+      setOpenInfo(prev => !prev);
+    }
   }
 
-  if (loading) return (<Text textStyle="4xl">Cargando guerreros <Spinner size="sm" /></Text>);
+  const handlerAddWarrior = (newWarrior: Warrior) => {
+    setWarriors(prev => [...prev, newWarrior]);
+    setOpenCreate(prev => !prev)
+  };
+
+  const handlerDeleteWarrior = (idWarrior: string) => {
+    setWarriors(prev => prev.filter(warrior => warrior.idWarrior !== idWarrior));
+  }
+
+  if (loading) {
+    return (
+      <Container padding="6" width="100vw" height="100vh">
+        <Flex gap="6" wrap="wrap" minWidth="300px" justify="center">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Skeleton key={index} height="250px" width="280px" borderRadius="md" />
+          ))}
+        </Flex>
+      </Container>
+    );
+  }
 
   return (
     <>
-      <WarriorCreate warriorTypes={warriorTypes} warriorBreeds={warriorBreeds} warriorPowers={warriorPowers} warriorImages={warriorImages}/>
-      <WarriorList warriors={warriors} handlerShowWarrior={handlerShowWarrior} />
-      {openInfo && <WarriorData open={openInfo} setOpen={setOpenInfo} idWarrior={idWarrior} />}
+      <BtnCreateWarrior openCreate={openCreate} setOpenCreate={setOpenCreate} />
+      {openCreate &&
+        <WarriorCreate
+          warriorTypes={warriorTypes}
+          warriorBreeds={warriorBreeds}
+          warriorPowers={warriorPowers}
+          warriorImages={warriorImages}
+          handlerAddWarrior={handlerAddWarrior} />}
+      <WarriorList warriors={warriors} handleShowWarrior={handleShowWarrior} />
+      {openInfo &&
+        <WarriorData
+          open={openInfo}
+          setOpen={setOpenInfo}
+          idWarrior={idWarrior}
+          handlerDeleteWarrior={handlerDeleteWarrior}
+          warriorTypes={warriorTypes}
+          warriorBreeds={warriorBreeds}
+          warriorPowers={warriorPowers}
+          warriorImages={warriorImages}
+        />}
     </>
   )
 }

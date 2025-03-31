@@ -26,17 +26,20 @@ public class Warrior implements Serializable {
     @Size(min = 3, message = "El campo name debe contener al menos 3 caracteres")
     private String name;
 
+    @NotBlank(message = "El campo image no puede ser nulo o vacío")
     @Schema(examples = "https://dragonball-api.com/characters/vegeta_normal.webp")
     private String image;
 
     @Schema(examples = "100.0")
     @NotNull(message = "El campo health no puede ser nulo o vacío")
     @Positive(message = "El valor del campo health debe ser mayor a cero (0)")
+    @Max(value = 1000, message = "El valor de la salud debe ser máximo de 1000")
     private Double health;
 
     @Schema(examples = "100.0")
     @NotNull(message = "El campo energy no puede ser nulo o vacío")
     @Positive(message = "El valor del campo energy debe ser mayor a cero (0)")
+    @Max(value = 1000, message = "El valor de la energía debe ser máximo de 1000")
     private Double energy;
 
     @Schema(examples = "0e1bd9ed-25b0-43e2-b55a-1013c98e63e5")
@@ -50,8 +53,8 @@ public class Warrior implements Serializable {
     private String warriorTypeId;
 
     @NotNull(message = "La lista de poderes no puede ser nula o estar vacía")
+    @Size(min = 5, message = "El guerrero debe tener al menos cinco (5) referencias de poderes")
     @Schema(examples = "[\"2d4f1313-4c22-4576-8c97-a9b3416fe416\", \"e37b7e13-9843-4747-9ef0-ad9ef99ac4a2\"]")
-    @Size(min = 1, message = "El guerrero debe tener al menos una referencia a un poder")
     private List<String> powersId;
 
     private Breed breed;

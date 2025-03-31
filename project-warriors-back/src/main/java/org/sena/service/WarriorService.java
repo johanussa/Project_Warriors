@@ -7,11 +7,13 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import org.sena.domain.Warrior;
-import org.sena.helper.Exception.WarriorException;
+import org.sena.helper.exception.WarriorException;
 import org.sena.repository.WarriorRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class WarriorService {
@@ -51,6 +53,7 @@ public class WarriorService {
 
         LOG.infof("@createWarriorRegistry SERV > Inicia servicio de almacenamiento del guerrero: %s.", warrior);
 
+        warrior.setName(capitalize(warrior.getName()));
         validateWarriorRegistry(warrior.getName());
 
         LOG.infof("@createWarriorRegistry SERV > Se agrega el identificador al guerrero: %s", warrior.getName());
@@ -147,5 +150,14 @@ public class WarriorService {
         target.setBreedId(request.getBreedId());
         target.setWarriorTypeId(request.getWarriorTypeId());
         target.setPowersId(request.getPowersId());
+    }
+
+    private String capitalize(String text) {
+
+        LOG.infof("@capitalize SERV > Inicia servicio para capitalizar el texto: %s", text);
+
+        return Arrays.stream(text.split("\\s+"))
+                .map(word -> Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
     }
 }

@@ -7,7 +7,7 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 import org.sena.domain.Warrior;
-import org.sena.helper.Exception.WarriorException;
+import org.sena.helper.exception.WarriorException;
 import org.sena.restClient.ImagesProxy;
 
 import java.util.List;

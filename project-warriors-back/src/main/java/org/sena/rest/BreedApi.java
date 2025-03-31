@@ -95,8 +95,7 @@ public class BreedApi {
 
         breedService.createBreed(breed);
 
-        LOG.infof("@createBreed API > Finaliza ejecucion de API para almacenar la raza. La raza: %s se " +
-                "registro correctamente", breed);
+        LOG.infof("@createBreed API > Finaliza ejecucion de API. La raza: %s se registro correctamente", breed);
 
         return Response.ok().status(Response.Status.CREATED).build();
     }

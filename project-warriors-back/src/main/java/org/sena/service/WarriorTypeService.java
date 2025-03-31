@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import org.sena.domain.WarriorType;
-import org.sena.helper.Exception.WarriorException;
+import org.sena.helper.exception.WarriorException;
 import org.sena.repository.WarriorTypeRepository;
 
 import java.util.List;

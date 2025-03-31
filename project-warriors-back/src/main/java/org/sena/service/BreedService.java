@@ -1,13 +1,13 @@
 package org.sena.service;
 
-import io.quarkus.cache.CacheInvalidate;
+import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import org.sena.domain.Breed;
-import org.sena.helper.Exception.WarriorException;
+import org.sena.helper.exception.WarriorException;
 import org.sena.repository.BreedRepository;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class BreedService {
         return breeds;
     }
 
-    @CacheInvalidate(cacheName = "breed-cache")
+    @CacheInvalidateAll(cacheName = "breed-cache")
     public void createBreed(Breed breed) {
 
         LOG.infof("@createBreed SERV > Inicia servicio de almacenamiento de raza: %s en base de datos.", breed);
@@ -60,7 +60,7 @@ public class BreedService {
         LOG.infof("@createBreed SERV > Raza almacenada correctamente con ID: %s", breed.getIdBreed());
     }
 
-    @CacheInvalidate(cacheName = "breed-cache")
+    @CacheInvalidateAll(cacheName = "breed-cache")
     public void updateBreed(Breed breed) {
 
         LOG.infof("@updateBreed SERV > Inicia servicio para actualizar la raza con la data: %s. Inicia " +
@@ -79,7 +79,7 @@ public class BreedService {
         LOG.infof("@updateBreed SERV > La raza se actualizo correctamente con la informacion: %s", breedMongo);
     }
 
-    @CacheInvalidate(cacheName = "breed-cache")
+    @CacheInvalidateAll(cacheName = "breed-cache")
     public void deleteBreed(String idBreed) {
 
         LOG.infof("@deleteBreed SERV > Inicia eliminacion de raza con identificador: %s", idBreed);

@@ -8,9 +8,8 @@ export const getAllWarriors = async (): Promise<Warrior[]> => {
     try {
         const response = await axios.get<Warrior[]>(`${PATH_BASE}/warrior/allWarriors`);
         toast.success("Consulta lista de guerreros exitosa", { autoClose: 800 });
-
+        
         return response.data;
-
     } catch (error) {
         toast.error(`Error al consultar lista de guerreros. Error: ${validateError(error)}`);
         return [];
@@ -20,8 +19,6 @@ export const getAllWarriors = async (): Promise<Warrior[]> => {
 export const getWarriorById = async (idWarrior: string | undefined): Promise<Warrior | null> => {
     try {
         const response = await axios.get<Warrior>(`${PATH_BASE}/warrior/${idWarrior}`);
-        toast.success("Consulta de guerrero exitosa", { autoClose: 1000, position: "top-center" });
-
         return response.data;
     } catch (error) {
         toast.error(`Error al consultar guerrero. Error: ${validateError(error)}`);
@@ -32,8 +29,6 @@ export const getWarriorById = async (idWarrior: string | undefined): Promise<War
 export const getWarriorTypes = async (): Promise<WarriorType[]> => {
     try {
         const response = await axios.get<WarriorType[]>(`${PATH_BASE}/warrior-type/allWarriorTypes`);
-        toast.success("Consulta de tipos de guerreros exitosa", { autoClose: 800 });
-
         return response.data;
     } catch (error) {
         toast.error(`Error al consultar tipos de guerreros. Error: ${validateError(error)}`);
@@ -44,8 +39,6 @@ export const getWarriorTypes = async (): Promise<WarriorType[]> => {
 export const getBreeds = async (): Promise<Breed[]> => {
     try {
         const response = await axios.get<Breed[]>(`${PATH_BASE}/breed/allBreeds`);
-        toast.success("Consulta de razas exitosa", { autoClose: 800 });
-
         return response.data;
     } catch (error) {
         toast.error(`Error al consultar las razas. Error: ${validateError(error)}`);
@@ -56,8 +49,6 @@ export const getBreeds = async (): Promise<Breed[]> => {
 export const getPowers = async (): Promise<Power[]> => {
     try {
         const response = await axios.get<Power[]>(`${PATH_BASE}/power/allPowers`);
-        toast.success("Consulta de poderes exitosa", { autoClose: 800 });
-
         return response.data;
     } catch (error) {
         toast.error(`Error al consultar los poderes. Error: ${validateError(error)}`);
@@ -68,8 +59,6 @@ export const getPowers = async (): Promise<Power[]> => {
 export const getImages = async (): Promise<string[]> => {
     try {
         const response = await axios.get<string[]>(`${PATH_BASE}/images`);
-        toast.success("Consulta de imágenes exitosa", { autoClose: 800 });
-
         return response.data;
     } catch (error) {
         toast.error(`Error al consultar las imagenes. Error: ${validateError(error)}`);
@@ -77,9 +66,39 @@ export const getImages = async (): Promise<string[]> => {
     }
 }
 
+interface CreateWarriorProps {
+    warrior: Warrior;
+    handlerAddWarrior: (newWarrior: Warrior) => void;
+}
+
+export const createWarrior = async ({ warrior, handlerAddWarrior }: CreateWarriorProps): Promise<Warrior | void> => {
+    try {
+        const response = await axios.post<Warrior>(`${PATH_BASE}/warrior/create`, warrior);
+        toast.success("Guerrero creado exitosamente", { autoClose: 800 });
+        handlerAddWarrior(response.data);
+        return response.data;
+    } catch (error) {
+        toast.error(`Error al crear guerrero. ${validateError(error)}`);
+        return;
+    }
+}
+
+export const deleteWarrior = async (idWarrior: string | undefined): Promise<void> => {
+    try {
+        const response = await axios.delete<void>(`${PATH_BASE}/warrior/delete/${idWarrior}`);
+        toast.success("Guerrero eliminado correctamente", { autoClose: 800 });
+
+        return response.data;
+    }
+    catch (error) {
+        toast.error(`Error al eliminar guerrero. ${validateError(error)}`);
+        return;
+    }
+}
+
 export const validateError = (error: unknown): string => {
     if (axios.isAxiosError(error)) {
-        return error.response?.data?.message || error.message;
+        return error.response?.data?.detail || error.message;
     }
     return "Error desconocido";
 }

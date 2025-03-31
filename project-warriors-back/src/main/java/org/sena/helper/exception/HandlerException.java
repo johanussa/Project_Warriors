@@ -1,4 +1,4 @@
-package org.sena.helper.Exception;
+package org.sena.helper.exception;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
@@ -20,7 +20,7 @@ public class HandlerException implements ExceptionMapper<WarriorException> {
 
         return Response.status(ex.getErrorCode())
                 .entity(ResponseError.builder()
-                        .status(ex.getErrorCode().getStatusCode())
+                        .errorCode(ex.getErrorCode().getStatusCode())
                         .title(ex.getErrorCode())
                         .detail(ex.getMessage())
                         .build())
@@ -32,9 +32,9 @@ public class HandlerException implements ExceptionMapper<WarriorException> {
     public static class ResponseError {
 
         @Schema(examples = "404")
-        private int status;
+        private int errorCode;
 
-        @Schema(examples = "404")
+        @Schema(examples = "NOT_FOUND")
         private Response.Status title;
 
         @Schema(examples = "Internal Server Error")

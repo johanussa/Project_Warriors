@@ -1,4 +1,4 @@
-import { Drawer, VStack, Spinner, Text, DataList, Span } from "@chakra-ui/react";
+import { Drawer, VStack, Spinner, Text, DataList, Span, Separator, Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 import { Warrior, Breed, WarriorType, Power } from "../../services/types";
 
 export const LoadingScreen = () => (
@@ -53,7 +53,50 @@ export const WarriorPowers = ({ powers }: { powers?: Power[] }) => (
                 <Text><Span fontSize=".9rem" fontWeight="medium">Efecto: </Span>{power.effect}</Text>
                 <Text><Span fontSize=".9rem" fontWeight="medium">Daño: </Span>{power.damage}</Text>
                 <Text><Span fontSize=".9rem" fontWeight="medium">Energía consumida: </Span>{power.powerEnergyConsumed}</Text>
+                <Separator m="2" />
             </Drawer.Description>
         ))}
     </Drawer.Description>
+);
+
+interface ButtonConfirmProps {
+    warrior: Warrior | null;
+    handleDelete: (idWarrior: string | undefined) => void;
+}
+
+export const ButtonConfirm = ({ warrior, handleDelete }: ButtonConfirmProps) => (
+    <Dialog.Root size="sm">
+        <Dialog.Trigger asChild>
+            <Button colorPalette="red">
+                Eliminar
+            </Button>
+        </Dialog.Trigger>
+        <Portal>
+            <Dialog.Backdrop />
+            <Dialog.Positioner>
+                <Dialog.Content>
+                    <Dialog.Header>
+                        <Dialog.Title>¿ Elimnar guerrero ?</Dialog.Title>
+                    </Dialog.Header>
+                    <Dialog.Body>
+                        <p>
+                            Esta seguro que desea eliminar el guerrero:
+                            <Span fontSize="1.1rem" fontWeight="medium" > {warrior?.name}</Span>
+                        </p>
+                    </Dialog.Body>
+                    <Dialog.Footer>
+                        <Dialog.ActionTrigger asChild>
+                            <Button variant="outline">Cancelar</Button>
+                        </Dialog.ActionTrigger>
+                        <Button colorPalette="red" onClick={() => handleDelete(warrior?.idWarrior)} >
+                            Eliminar
+                        </Button>
+                    </Dialog.Footer>
+                    <Dialog.CloseTrigger asChild>
+                        <CloseButton size="sm" />
+                    </Dialog.CloseTrigger>
+                </Dialog.Content>
+            </Dialog.Positioner>
+        </Portal>
+    </Dialog.Root>
 );

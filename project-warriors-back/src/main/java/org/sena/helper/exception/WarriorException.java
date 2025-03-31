@@ -1,4 +1,4 @@
-package org.sena.helper.Exception;
+package org.sena.helper.exception;
 
 import jakarta.ws.rs.core.Response;
 import lombok.Getter;

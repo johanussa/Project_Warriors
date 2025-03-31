@@ -12,5 +12,5 @@ public interface ImagesProxy {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    ResponseApiDB getWarriorsImages(@QueryParam("limit") @DefaultValue("60") int limit);
+    ResponseApiDB getWarriorsImages(@QueryParam("limit") int limit);
 }

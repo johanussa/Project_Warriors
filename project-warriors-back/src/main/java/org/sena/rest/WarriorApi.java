@@ -95,7 +95,7 @@ public class WarriorApi {
         LOG.infof("@createWarrior API > Finaliza ejecucion de API para registrar un guerrero con la data: %s. " +
                 "El guerrero se registro exitosamente", warrior);
 
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.CREATED).entity(warrior).build();
     }
 
     @PUT
