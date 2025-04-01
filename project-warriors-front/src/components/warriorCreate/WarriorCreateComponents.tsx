@@ -122,7 +122,7 @@ export const CheckboxPowers = ({ options, handlerChange, powers }: RadioGroupPro
         <Text textStyle="sm" fontWeight="medium">Elegir poderes</Text>
         <Flex gap="2" flexWrap="wrap">
             {options.map((item) => (
-                <CheckboxCard.Root  key={item.id} value={item.id} minWidth="160px" _hover={{ bgColor: "#00000010" }}>
+                <CheckboxCard.Root key={item.id} value={item.id} minWidth="160px" _hover={{ bgColor: "#00000010" }}>
                     <CheckboxCard.HiddenInput />
                     <CheckboxCard.Control>
                         <CheckboxCard.Content>
@@ -139,7 +139,7 @@ export const CheckboxPowers = ({ options, handlerChange, powers }: RadioGroupPro
     </CheckboxGroup>
 );
 
-export const WarriorCreateComponent = ({ warrior, warriorTypes, warriorBreeds, warriorPowers, warriorImages, setWarrior, title }: WarriorCreateCompProps) => (
+export const WarriorCreateComponent = ({ warrior, warriorTypes, warriorBreeds, warriorPowers, warriorImages, setWarrior, title, isUpdate }: WarriorCreateCompProps) => (
     <Fieldset.Root size="lg" maxW="full" p="8" pt="0">
         <Stack>
             <Fieldset.Legend fontSize="1.3rem" fontWeight="bold">{title}</Fieldset.Legend>
@@ -152,12 +152,10 @@ export const WarriorCreateComponent = ({ warrior, warriorTypes, warriorBreeds, w
                 </Fieldset.Content>
             </Fieldset.Content>
         </Stack>
-
         <Fieldset.Content display="grid" gridTemplateColumns="1fr 1fr 1fr">
             <FieldForm value={warrior?.name} label="Nombre" type="text" name="name" handlerChange={(event) => onWarriorChange({ event, setWarrior })} />
             <FieldForm value={warrior?.energy} label="Energia" name="energy" handlerChange={(event) => onWarriorChange({ event, setWarrior })} />
             <FieldForm value={warrior?.health} label="Salud" name="health" handlerChange={(event) => onWarriorChange({ event, setWarrior })} />
-
             <RadioGroup value={warrior?.warriorTypeId} name="warriorTypeId" label="Tipo de guerrero" handlerChange={(event) => onWarriorChange({ event, setWarrior })}
                 options={warriorTypes.map(t => ({ id: t.idWarriorType, name: t.name, description: t.description }))} extra={false} />
             <RadioGroup value={warrior?.breedId} name="breedId" label="Raza del guerrero" handlerChange={(event) => onWarriorChange({ event, setWarrior })} width="260px"
@@ -166,7 +164,6 @@ export const WarriorCreateComponent = ({ warrior, warriorTypes, warriorBreeds, w
                 handlerChange={(event) => onWarriorChange({ event, setWarrior })} powers={warrior?.powersId}
                 options={warriorPowers.map(p => ({ id: p.idPower, name: p.name, description: p.description }))} />
         </Fieldset.Content>
-
-        <Button type="submit" alignSelf="flex-start">Crear guerrero</Button>
+        <Button type="submit" alignSelf="flex-start">{isUpdate ? "Actualizar guerrero" : "Crear guerrero"}</Button>
     </Fieldset.Root>
 );

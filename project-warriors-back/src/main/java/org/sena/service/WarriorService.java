@@ -66,11 +66,12 @@ public class WarriorService {
     }
 
     @CacheInvalidateAll(cacheName = "warrior-cache")
-    public void updateWarriorRegistry(Warrior warrior) {
+    public Warrior updateWarriorRegistry(Warrior warrior) {
 
         LOG.infof("@updateWarriorRegistry SERV > Inicia ejecucion del servicio para actualizar registro de " +
-                "un guerrero con la información: %s", warrior);
+                "un guerrero con la informacion: %s", warrior);
 
+        warrior.setName(capitalize(warrior.getName()));
         Warrior warriorMongo = getWarriorOptional(warrior.getIdWarrior());
 
         LOG.infof("@updateWarriorRegistry SERV > El guerrero obtenido es: %s. Inicia actualizacion", warriorMongo);
@@ -79,6 +80,8 @@ public class WarriorService {
         warriorRepository.update(warriorMongo);
 
         LOG.infof("@updateWarriorRegistry SERV > El guerrero se actualizo correctamente con la data: %s", warriorMongo);
+
+        return warriorMongo;
     }
 
     @CacheInvalidateAll(cacheName = "warrior-cache")

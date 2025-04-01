@@ -1,11 +1,13 @@
-import { Button, CloseButton, Dialog, Portal, Span } from "@chakra-ui/react"
+import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react"
 import { Warrior, WarriorUpdateProps } from "../../services/types";
 import { WarriorCreateComponent } from "../warriorCreate/WarriorCreateComponents";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { updateWarrior } from "../../services/warriorService";
 
-const WarriorUpdate = ({ warrior, warriorTypes, warriorBreeds, warriorPowers, warriorImages }: WarriorUpdateProps) => {
+const WarriorUpdate = ({ warrior, warriorTypes, warriorBreeds, warriorPowers, warriorImages, handlerUpdateWarrior }: WarriorUpdateProps) => {
 
-  const [warriorData, setWarrior] = useState<Warrior>({
+  const [warriorUp, setWarriorUp] = useState<Warrior>({
+    idWarrior: warrior.idWarrior,
     name: warrior.name,
     image: warrior.image,
     health: warrior.health,
@@ -15,8 +17,10 @@ const WarriorUpdate = ({ warrior, warriorTypes, warriorBreeds, warriorPowers, wa
     powersId: warrior.powers?.map(power => power.idPower) || [],
   });
 
-  const handleUpdate = () => {
-    // Example logic for updating
+  const handlerUpdate = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const response = updateWarrior(warriorUp);
+    if (response !== null) handlerUpdateWarrior(warriorUp);    
   };
 
   return (
@@ -34,15 +38,18 @@ const WarriorUpdate = ({ warrior, warriorTypes, warriorBreeds, warriorPowers, wa
               </Dialog.CloseTrigger>
             </Dialog.Header>
             <Dialog.Body>
-              <WarriorCreateComponent
-                warrior={warriorData}
-                title={`Actualizar información del guerrero: ${warrior.name}`}
-                warriorTypes={warriorTypes}
-                warriorBreeds={warriorBreeds}
-                warriorPowers={warriorPowers}
-                warriorImages={warriorImages}
-                setWarrior={setWarrior}
-              />
+              <form onSubmit={handlerUpdate}>
+                <WarriorCreateComponent
+                  warrior={warriorUp}
+                  title={`Actualizar información del guerrero: ${warrior.name}`}
+                  warriorTypes={warriorTypes}
+                  warriorBreeds={warriorBreeds}
+                  warriorPowers={warriorPowers}
+                  warriorImages={warriorImages}
+                  setWarrior={setWarriorUp}
+                  isUpdate
+                />
+              </form>
             </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>

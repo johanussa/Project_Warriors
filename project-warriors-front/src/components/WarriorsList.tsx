@@ -18,7 +18,7 @@ export const WarriorList = ({ warriors, handleShowWarrior }: WarriorListProps) =
                 src={warrior.image} alt={warrior.name}
               />
               <Card.Body bgColor="#000" p="3" pt="2">
-                <Card.Title textAlign="center">{warrior.name}</Card.Title>
+                <Card.Title textAlign="center" style={{textTransform: "capitalize"}}>{warrior.name}</Card.Title>
                 <Card.Body p="0">
                   {["Salud", "Energia"].map((option, index) => (
                     <Card.Description display="flex" justifyContent="space-evenly" alignItems="center" color="#FFF" key={option}>

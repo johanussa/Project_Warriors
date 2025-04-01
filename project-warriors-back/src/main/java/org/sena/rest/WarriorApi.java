@@ -116,12 +116,12 @@ public class WarriorApi {
         LOG.infof("@updateWarrior API > Inicia ejecucion de API para actualizar el registro del guerrero " +
                 "con la informacion: %s", warrior);
 
-        warriorService.updateWarriorRegistry(warrior);
+        Warrior warriorUpdated = warriorService.updateWarriorRegistry(warrior);
 
         LOG.infof("@updateWarrior API > Finaliza ejecucion de API para actualizar el registro de un guerrero. " +
                 "La informacion actualizada fue: %s", warrior);
 
-        return Response.status(Response.Status.NO_CONTENT).build();
+        return Response.ok().entity(warriorUpdated).build();
     }
 
     @DELETE

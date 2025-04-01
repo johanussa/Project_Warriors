@@ -53,6 +53,11 @@ const WarriorPage = () => {
     setOpenCreate(prev => !prev)
   };
 
+  const handlerUpdateWarrior = (updatedWarrior: Warrior) => {
+    setWarriors(prev => prev.map(warrior => warrior.idWarrior === updatedWarrior.idWarrior ? updatedWarrior : warrior));
+    setOpenInfo(prev => !prev);
+  }
+
   const handlerDeleteWarrior = (idWarrior: string) => {
     setWarriors(prev => prev.filter(warrior => warrior.idWarrior !== idWarrior));
   }
@@ -86,6 +91,7 @@ const WarriorPage = () => {
           setOpen={setOpenInfo}
           idWarrior={idWarrior}
           handlerDeleteWarrior={handlerDeleteWarrior}
+          handlerUpdateWarrior={handlerUpdateWarrior}
           warriorTypes={warriorTypes}
           warriorBreeds={warriorBreeds}
           warriorPowers={warriorPowers}

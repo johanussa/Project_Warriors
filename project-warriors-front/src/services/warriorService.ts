@@ -83,6 +83,18 @@ export const createWarrior = async ({ warrior, handlerAddWarrior }: CreateWarrio
     }
 }
 
+export const updateWarrior = async (warrior: Warrior): Promise<Warrior | null> => {
+    try {
+        const response = await axios.put<Warrior>(`${PATH_BASE}/warrior/update`, warrior);
+        toast.success("Guerrero actualizado exitosamente", { autoClose: 800 });
+        return response.data;
+    }
+    catch (error) {
+        toast.error(`Error al actualizar guerrero. ${validateError(error)}`);
+        return null;
+    }
+}
+
 export const deleteWarrior = async (idWarrior: string | undefined): Promise<void> => {
     try {
         const response = await axios.delete<void>(`${PATH_BASE}/warrior/delete/${idWarrior}`);

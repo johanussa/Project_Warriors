@@ -76,6 +76,7 @@ export interface WarriorCreateCompProps extends WarriorListData {
     setWarrior: (updater: (prevState: Warrior) => Warrior) => void;
     title: string;
     warrior?: Warrior;
+    isUpdate?: boolean;
 }
 
 export interface WarriorDataProps extends WarriorListData {
@@ -83,10 +84,12 @@ export interface WarriorDataProps extends WarriorListData {
     idWarrior: string;
     setOpen: (event: boolean) => void;
     handlerDeleteWarrior: (idWarrior: string) => void;
+    handlerUpdateWarrior: (updatedWarrior: Warrior) => void;
 }
 
 export interface WarriorUpdateProps extends WarriorListData {
     warrior: Warrior;
+    handlerUpdateWarrior: (updatedWarrior: Warrior) => void;
 }
 
 export interface OnWarriorChangeProps {

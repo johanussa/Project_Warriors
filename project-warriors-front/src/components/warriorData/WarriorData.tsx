@@ -5,7 +5,7 @@ import { deleteWarrior, getWarriorById } from "../../services/warriorService";
 import { ButtonConfirm, LoadingScreen, WarriorBreed, WarriorPowers, WarriorStatus, WarriorTypeComp } from "./WarriorDataComponents";
 import WarriorUpdate from "../warriorUpdate/WarriorUpdate";
 
-const WarriorData = ({ open, setOpen, idWarrior, handlerDeleteWarrior, warriorTypes, warriorBreeds, warriorImages, warriorPowers }: WarriorDataProps) => {
+const WarriorData = ({ open, setOpen, idWarrior, handlerDeleteWarrior, handlerUpdateWarrior, warriorTypes, warriorBreeds, warriorImages, warriorPowers }: WarriorDataProps) => {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [warrior, setWarrior] = useState<Warrior>({
@@ -57,6 +57,7 @@ const WarriorData = ({ open, setOpen, idWarrior, handlerDeleteWarrior, warriorTy
                   <Button variant="outline" onClick={() => setOpen(false)}>Cerrar</Button>
                   <WarriorUpdate
                     warrior={warrior}
+                    handlerUpdateWarrior={handlerUpdateWarrior}
                     warriorTypes={warriorTypes}
                     warriorBreeds={warriorBreeds}
                     warriorPowers={warriorPowers}
