@@ -52,7 +52,7 @@ export interface FieldFormProps {
     label: string;
     name: string;
     type?: string;
-    value? : string | number;
+    value?: string | number;
     handlerChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -98,6 +98,11 @@ export interface OnWarriorChangeProps {
 }
 
 export interface WarriorCreateProps extends WarriorListData {
+    handlerAddWarrior: (newWarrior: Warrior) => void;
+}
+
+export interface CreateWarriorProps {
+    warrior: Warrior;
     handlerAddWarrior: (newWarrior: Warrior) => void;
 }
 

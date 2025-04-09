@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Breed, Power, Warrior, WarriorType } from './types';
+import { Breed, Power, Warrior, WarriorType, CreateWarriorProps } from './types';
 
-const PATH_BASE = 'http://localhost:8080/internal';
+const PATH_BASE = 'https://warriors-back.onrender.com/internal';
 
 export const getAllWarriors = async (): Promise<Warrior[]> => {
     try {
@@ -64,11 +64,6 @@ export const getImages = async (): Promise<string[]> => {
         toast.error(`Error al consultar las imagenes. Error: ${validateError(error)}`);
         return [];
     }
-}
-
-interface CreateWarriorProps {
-    warrior: Warrior;
-    handlerAddWarrior: (newWarrior: Warrior) => void;
 }
 
 export const createWarrior = async ({ warrior, handlerAddWarrior }: CreateWarriorProps): Promise<Warrior | void> => {
